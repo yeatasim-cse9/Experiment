@@ -38,13 +38,18 @@ service cloud.firestore {
       allow create: if request.auth != null 
                     && request.resource.data.applicantId == request.auth.uid;
                     
-      // Only the applicant or the owner of the associated gig can read or update it
-      allow read, update: if request.auth != null 
-                          && (
-                            resource.data.applicantId == request.auth.uid 
-                            || get(/databases/$(database)/documents/gigs/$(resource.data.gigId)).data.ownerId == request.auth.uid
-                          );
-                          
+      // The applicant or the gig owner can read applications
+      // Uses denormalized gigOwnerId field to avoid cross-collection get() which blocks list queries
+      allow read: if request.auth != null 
+                  && (
+                    resource.data.applicantId == request.auth.uid 
+                    || resource.data.gigOwnerId == request.auth.uid
+                  );
+
+      // Only the gig owner can update application status (accept/reject)
+      allow update: if request.auth != null 
+                    && resource.data.gigOwnerId == request.auth.uid;
+                           
       allow delete: if request.auth != null 
                     && resource.data.applicantId == request.auth.uid;
     }

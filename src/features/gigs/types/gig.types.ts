@@ -10,6 +10,6 @@ export interface Gig {
   ownerId: string;
   ownerDisplayName: string;
   ownerPhotoThumbURL: string;
-  status: 'open' | 'in-progress' | 'completed' | 'cancelled';
+  status: 'open' | 'assigned' | 'in-progress' | 'completed' | 'cancelled';
   createdAt: Timestamp | Date | number; 
 }

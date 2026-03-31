@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../../app/providers/AuthProvider';
+import { logoutUser } from '../../../features/auth/services/auth.service';
 
 export const Navbar = () => {
   const { user, isAuthenticated, isLoading } = useAuth();
@@ -29,20 +30,33 @@ export const Navbar = () => {
             {!isLoading && (
               isAuthenticated ? (
                 <>
-                  <Link to="/dashboard" className="text-sm font-medium text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors hidden sm:block">
-                    Dashboard
-                  </Link>
-                  <Link to="/dashboard" className="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm shadow-md hover:shadow-lg transition-all hover:scale-105 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 dark:focus-visible:ring-offset-zinc-900 select-none cursor-pointer">
-                    {user?.email?.[0].toUpperCase() || 'U'}
-                  </Link>
+                  <div className="hidden sm:flex items-center gap-6 mr-4">
+                    <Link to="/dashboard/my-gigs" className="text-sm font-medium text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors">
+                      My Gigs
+                    </Link>
+                    <Link to="/dashboard/my-applications" className="text-sm font-medium text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors">
+                      My Applications
+                    </Link>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Link to="/dashboard/profile" className="w-9 h-9 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white font-bold text-sm shadow-md hover:shadow-lg transition-all hover:scale-105 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-500 dark:focus-visible:ring-offset-zinc-900 select-none cursor-pointer">
+                      {user?.email?.[0].toUpperCase() || 'U'}
+                    </Link>
+                    <button 
+                      onClick={() => logoutUser()}
+                      className="text-xs font-bold text-gray-500 hover:text-red-500 transition-colors uppercase tracking-wider"
+                    >
+                      Logout
+                    </button>
+                  </div>
                 </>
               ) : (
                 <>
                   <Link to="/login" className="text-sm font-medium text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm">
                     Log in
                   </Link>
-                  <Link to="/signup" className="text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all duration-200 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-indigo-600 dark:focus-visible:ring-offset-zinc-900">
-                    Sign up
+                  <Link to="/register" className="text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all duration-200 active:scale-95 outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-indigo-600 dark:focus-visible:ring-offset-zinc-900">
+                    Register
                   </Link>
                 </>
               )

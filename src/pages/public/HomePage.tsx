@@ -27,8 +27,8 @@ export const HomePage = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-            <Link to="/create-gig" className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-lg shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5 transition-all outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 active:scale-95 text-center">
-              Post a Gig
+            <Link to="/dashboard/create-gig" className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-lg shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:-translate-y-0.5 transition-all outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 active:scale-95 text-center">
+              Post a Gig - It's Free
             </Link>
             <Link to="/explore" className="w-full sm:w-auto px-8 py-3.5 sm:py-4 rounded-full bg-white dark:bg-zinc-800 hover:bg-gray-50 dark:hover:bg-zinc-700 text-gray-900 dark:text-white font-semibold text-lg border border-gray-200 dark:border-zinc-700 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200 dark:focus:ring-zinc-700 active:scale-95 text-center">
               Find Work

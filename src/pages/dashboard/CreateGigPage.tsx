@@ -44,7 +44,7 @@ export const CreateGigPage = () => {
       ownerPhotoThumbURL: imageUrl || ownerAvatar, 
     }, {
       onSuccess: () => {
-        navigate('/');
+        navigate('/dashboard/my-gigs');
       }
     });
   };

@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signInWithGoogle } from '../../lib/firebase/auth';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { registerWithEmail, loginWithGoogle } from '../../features/auth/services/auth.service';
 
-export const SignUpPage = () => {
+export const RegisterPage = () => {
   const navigate = useNavigate();
 
   const [name, setName] = useState('');
@@ -20,12 +18,8 @@ export const SignUpPage = () => {
     setError('');
     setIsLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      // Immediately set the display name on the profile
-      await updateProfile(userCredential.user, {
-        displayName: name
-      });
-      navigate('/', { replace: true });
+      await registerWithEmail(email, password, name);
+      navigate('/dashboard/my-gigs', { replace: true });
     } catch (err: any) {
       console.error(err);
       if (err.code === 'auth/email-already-in-use') {
@@ -33,7 +27,7 @@ export const SignUpPage = () => {
       } else if (err.code === 'auth/weak-password') {
         setError('Password should be at least 6 characters.');
       } else {
-        setError('Sign up failed. Please try again.');
+        setError('Registration failed. Please try again.');
       }
     } finally {
       setIsLoading(false);
@@ -44,8 +38,8 @@ export const SignUpPage = () => {
     setError('');
     setIsLoading(true);
     try {
-      await signInWithGoogle();
-      navigate('/', { replace: true });
+      await loginWithGoogle();
+      navigate('/dashboard/my-gigs', { replace: true });
     } catch (err: any) {
       console.error(err);
       setError('Google sign-up failed. Please try again.');
@@ -112,7 +106,7 @@ export const SignUpPage = () => {
             disabled={isLoading}
             className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/30 transition-all outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
-            {isLoading ? <span className="w-5 h-5 rounded-full border-2 border-white/30 border-t-white animate-spin" /> : 'Sign Up'}
+            {isLoading ? <span className="w-5 h-5 rounded-full border-2 border-white/30 border-t-white animate-spin" /> : 'Create Account'}
           </button>
         </form>
 
@@ -134,12 +128,12 @@ export const SignUpPage = () => {
             <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
             <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
           </svg>
-          Google
+          Continue with Google
         </button>
       </div>
 
       <div className="mt-8 text-center text-gray-500 dark:text-gray-400">
-        Already have an account? <Link to="/login" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Sign in</Link>
+        Already have an account? <Link to="/login" className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline">Log in</Link>
       </div>
     </div>
   );

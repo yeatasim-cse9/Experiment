@@ -5,9 +5,11 @@ interface GigGridProps {
   gigs?: Gig[];
   isLoading: boolean;
   error?: Error | null;
+  renderActions?: (gig: Gig) => React.ReactNode;
+  hideEmptyState?: boolean;
 }
 
-export const GigGrid = ({ gigs, isLoading, error }: GigGridProps) => {
+export const GigGrid = ({ gigs, isLoading, error, renderActions, hideEmptyState }: GigGridProps) => {
   if (error) {
     return (
       <div className="w-full p-8 text-center border border-red-200 bg-red-50 dark:bg-red-900/10 dark:border-red-800/30 rounded-2xl text-red-600 dark:text-red-400">
@@ -43,6 +45,7 @@ export const GigGrid = ({ gigs, isLoading, error }: GigGridProps) => {
   }
 
   if (!gigs || gigs.length === 0) {
+    if (hideEmptyState) return null;
     return (
       <div className="flex flex-col items-center justify-center p-12 text-center bg-gray-50 dark:bg-zinc-900/50 rounded-2xl border-2 border-dashed border-gray-200 dark:border-zinc-800">
         <svg xmlns="http://www.w3.org/2000/svg" className="w-12 h-12 text-gray-400 dark:text-gray-500 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -57,7 +60,11 @@ export const GigGrid = ({ gigs, isLoading, error }: GigGridProps) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
       {gigs.map((gig) => (
-        <GigCard key={gig.id} gig={gig} />
+        <GigCard 
+          key={gig.id} 
+          gig={gig} 
+          actions={renderActions ? renderActions(gig) : undefined}
+        />
       ))}
     </div>
   );

@@ -3,11 +3,12 @@ import type { Gig } from '../types/gig.types';
 
 interface GigCardProps {
   gig: Gig;
+  actions?: React.ReactNode;
 }
 
-export const GigCard = ({ gig }: GigCardProps) => {
+export const GigCard = ({ gig, actions }: GigCardProps) => {
   return (
-    <div className="flex flex-col bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+    <div className="flex flex-col bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden h-full">
       <div className="flex justify-between items-start mb-4">
         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300">
           {gig.categoryName}
@@ -17,7 +18,7 @@ export const GigCard = ({ gig }: GigCardProps) => {
         </span>
       </div>
       
-      <Link to={`/gig/${gig.id}`} className="outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm">
+      <Link to={`/gigs/${gig.id}`} className="outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 rounded-sm">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-1">
           {gig.title}
         </h3>
@@ -26,6 +27,12 @@ export const GigCard = ({ gig }: GigCardProps) => {
       <p className="text-gray-600 dark:text-gray-400 text-sm mb-6 line-clamp-2 flex-grow">
         {gig.shortDescription}
       </p>
+
+      {actions && (
+        <div className="mb-4">
+          {actions}
+        </div>
+      )}
 
       <div className="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-zinc-800">
         <div className="flex items-center gap-3">

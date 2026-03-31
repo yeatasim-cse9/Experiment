@@ -30,7 +30,7 @@ export const ImageUploader = ({ onUploadSuccess }: ImageUploaderProps) => {
     try {
       const url = await uploadImageToImgBB(file);
       onUploadSuccess(url);
-    } catch (err) {
+    } catch (_err) {
       setError('Failed to upload image. Please try again.');
       setPreviewUrl(null); // Clear preview on failure
     } finally {
